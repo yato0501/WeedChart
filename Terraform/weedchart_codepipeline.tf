@@ -119,7 +119,7 @@ resource "aws_codebuild_project" "weedchart_build" {
    # buildspec           = data.template_file.buildspec.rendered
     git_clone_depth     = 0
     insecure_ssl        = false
-    report_build_status = false
+    report_build_status = true
     type                = "CODEPIPELINE"
   }
 }
@@ -175,10 +175,10 @@ EOF
 }
 
 
-resource "aws_cloudwatch_log_group" "weedchart_codebuild" {
-  name = "weedchart-codebuild"
-
-}
+# resource "aws_cloudwatch_log_group" "weedchart_codebuild" {
+#   name = "weedchart-codebuild"
+#   role_arn = aws_iam_role.weedchart_codebuild_service_role.role.arn
+# }
 
 resource "aws_iam_role_policy" "weedchart_codebuild_service_role_policy" {
   name = "weedchart-codebuild-service-role-policy"
@@ -191,8 +191,7 @@ resource "aws_iam_role_policy" "weedchart_codebuild_service_role_policy" {
         {
             "Effect": "Allow",
             "Resource": [
-                "${aws_cloudwatch_log_group.weedchart_codebuild.arn}",
-                "${aws_cloudwatch_log_group.weedchart_codebuild.arn}/*"
+                "*"
             ],
             "Action": [
                 "logs:CreateLogGroup",
