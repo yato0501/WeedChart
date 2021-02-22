@@ -180,8 +180,8 @@ resource "aws_cloudwatch_log_group" "weedchart_codebuild" {
 
 }
 
-resource "aws_iam_role_policy" "weedchart_codebuild_policy" {
-  name = "weedchart-codepipeline-policy"
+resource "aws_iam_role_policy" "weedchart_codebuild_service_role_policy" {
+  name = "weedchart-codebuild-service-role-policy"
   role = aws_iam_role.weedchart_codebuild_service_role.id
 
   policy = <<EOF
